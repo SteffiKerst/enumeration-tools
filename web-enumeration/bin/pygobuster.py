@@ -23,7 +23,11 @@ class GoBuster:
     def __init__(self, url: str, simple_atuh_username, simple_auth_password, usergent:str, cookies:str, wordlist: iter, threads: int,
                  success_codes: iter, file_extensions: iter, io_object, verbose: bool, ignore_errors: bool,
                  only_extensions: bool):
+        # Url to enumerate
         self.__url = url
+        # when the user give a url folder explicity
+        if self.__url[-1] == '/':
+            self.__url = self.__url[:-1]
         # Usename and password provided for simple http oauth
         # If one is false no one is going to be used
         if simple_atuh_username:
@@ -78,7 +82,7 @@ class GoBuster:
         # Try and except here because sometimes it
         # noinspection PyBroadException
         try:
-            return get(url, headers=self.__headers, cookies=self.__cookies).status_code
+            return get(url).status_code
         except:
             if self.__verbose:
                 if not self.__ignore_errors:
@@ -154,9 +158,9 @@ class GoBuster:
 # Process the arguments
 # Only when is used as a script
 def processArgs(args):
-    try:
+    if args['o'] not in (False, ''):
         args['o'] = open(args['o'], 'w')
-    except Exception as e:
+    else:
         args['o'] = NoOutput()
     try:
         with open(args['wordlist'], 'r') as file:
@@ -173,7 +177,7 @@ def main():
     parser.add_argument('-u', '--url', help='Target url', required=True)
     parser.add_argument('-U', help='Username for simple oauth', default=False)
     parser.add_argument('-P', help='Password for simple oauth', default=False)
-    parser.add_argument('-a', help='User-Agent for requests default is pygobuster', default='pygobuster')
+    parser.add_argument('-a', help='User-Agent for requests default is google', default='Google Chrome Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36.')
     parser.add_argument('-c', help='Cookies for the requests', default='')
     parser.add_argument('-w', '--wordlist', help='File path to the wordlist', required=True)
     parser.add_argument('-t', help='Number of threads to be active during the session', type=int, default=10)
