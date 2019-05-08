@@ -165,7 +165,7 @@ def processArgs(args):
     except:
         exit(-1)
     args['x'] = args['x'].split(',')
-    args['s'] = args['s'].split(',')
+    args['s'] = tuple(map(int, args['s'].split(',')))
     return args
 # main function to execute it as program
 def main():
