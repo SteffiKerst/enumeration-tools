@@ -82,7 +82,7 @@ class GoBuster:
         # Try and except here because sometimes it
         # noinspection PyBroadException
         try:
-            return get(url).status_code
+            return get(url, headers=self.__headers, cookies=self.__cookies).status_code
         except:
             if self.__verbose:
                 if not self.__ignore_errors:
@@ -94,7 +94,8 @@ class GoBuster:
         status_code = self.downloadPage(join(self.__url, word).replace('\\', '/'))
         if status_code in self.__success_codes:
             if self.__verbose:
-                self.__print_queue.put(f"{word} {status_code}")
+                # Large  line let to overwrite the extra stuff that percentage prints
+                self.__print_queue.put(f"{word} {status_code}                    ")
             # Add the value to the writing queue
             self.__write_queue.put(f"{word} {status_code}")
         # When finish remove this thread from active threads
@@ -128,7 +129,7 @@ class GoBuster:
             # Print the percentage of completed
             print(
                 f"{self.finished_threads}/{self.wordlist_length} "
-                f"{(self.finished_threads * self.wordlist_multiplier)/self.wordlist_length}",
+                f"{str((self.finished_threads * self.wordlist_multiplier * 100)/self.wordlist_length)[:4]}%",
                 end='\r')
         print("-DONE-")
 
