@@ -1,6 +1,6 @@
 # Directory listing tool
 # Can be used alone or as a module
-
+# Do not use this one if have gobuster installed
 # Dependencie lists:
 # ***request (pip install requests)
 from requests import get
