@@ -168,7 +168,7 @@ def main():
     parser.add_argument('-w', '--wordlist', help='File that is used for both usernames, passwords', default=False)
     parser.add_argument('-c', '--continue-cracking', help='Keep trying passwords fora user that is already cracked',
                         action='store_const', const=True, default=False)
-    parser.add_argument('-t', '--max-threads', help='Maximum number of threads active at the same time', type=int,
+    parser.add_argument('-t', '--max-threads', help='Maximum number of threads active at the same time (Remenber this isn\'t c/cpp  code)', type=int,
                         default=10)
     parser.add_argument('-P', '--paralel-mode',
                         help='The threads are created for each username; In default mode (linear), all' \
